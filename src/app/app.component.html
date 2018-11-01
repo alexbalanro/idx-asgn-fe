@@ -1,0 +1,33 @@
+<div style="text-align:center">
+  <h1>
+    {{title}}
+  </h1>
+</div>
+
+<div class="container" fxLayout="row" fxLayoutWrap fxLayoutGap="5%" fxLayoutAlign="center">
+  <mat-form-field fxFlex="70%" class="search-form">
+    <input name="search" #searchTerm matInput placeholder="Search for album or book" (keyup.enter)="getSearchResults(searchTerm.value)"
+    />
+  </mat-form-field>
+
+  <button fxFlex="10%" mat-raised-button class="search-button" color="primary" (click)="getSearchResults(searchTerm.value)">Search</button>
+</div>
+
+<br>
+
+<div *ngFor="let searchResult of searchResults" class="container" fxLayout="row" fxLayoutWrap fxLayoutGap="2%" fxLayoutAlign="center">
+  <mat-card fxFlex="80%">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <i *ngIf="searchResult.searchResultType=='BOOK'" class="material-icons md-48">chrome_reader_mode</i>
+        <i *ngIf="searchResult.searchResultType=='ALBUM'" class="material-icons md-48">album</i>
+      </div>
+      <mat-card-title>{{searchResult.title}}</mat-card-title>
+      <mat-card-subtitle>{{searchResult.author}}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+</div>
+
+<div *ngIf="lastError"> 
+    <i class="material-icons">error</i> Cannot get data from server: {{lastError.error}} 
+</div>
